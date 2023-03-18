@@ -1,0 +1,48 @@
+{% load django_bootstrap5 %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    {% bootstrap_css %}
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css"
+          integrity="sha512-5PV92qsds/16vyYIJo3T/As4m2d8b6oWYfoqV+vtizRB6KhF1F9kYzWzQmsO6T3z3QG2Xdhrx7FQ+5R1LiQdUA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    {% block css %}{% endblock %}
+    <style>
+        .navbar {
+            background-color: #9aa4af !important;
+        }
+
+        .bg-red {
+            background-color: #eb1248c3 !important;
+        }
+
+        .bg-red:hover {
+            background-color: rgba(21, 222, 169, 0.76) !important;
+        }
+    .wrapper{
+        min-height: 100vh;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+    }
+    </style>
+
+</head>
+
+<body class="wrapper">
+{% include 'partials/navbar.html' %}
+<main>
+{% bootstrap_messages %}
+    {% block content %}{% endblock %}
+</main>
+{% include 'partials/footer.html' %}
+{% bootstrap_javascript %}
+{% block js %}{% endblock %}
+</body>
+
+</html>
