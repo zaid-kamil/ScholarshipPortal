@@ -1,0 +1,113 @@
+{% extends 'layout/base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+{% block content %}
+    <section class="container-fluid hero">
+        <div class="row">
+            <div class="col-md-12 p-0">
+                <div class="content text-center">
+                    <h1 class="display-1 ">Search Scholarships</h1>
+                    <p class="lead leading-snug">The nation’s largest, multi-billion dollar
+                        scholarship database— create a free account to see all of
+                        your personalized matches and start applying today
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container-fluid">
+        <div class="row">
+            <aside class="col-lg-2 col-md-4 py-5">
+                <h2>Find Scholarship</h2>
+                <form method="GET" autocomplete="off">
+                    {% bootstrap_form filter.form %}
+                    {% if user.is_authenticated %}
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    {% else %}
+                        <a class="btn btn-primary" href="{% url 'login' %}">Search</a>
+                    {% endif %}
+                </form>
+            </aside>
+            <div class="col-lg-10 col-md-8">
+                <div class="container-fluid p-3 ">
+                    <div class="row p-5">
+                        <h1 class=" text-center text-primary mb-4">
+                            Available Scholarships
+                        </h1>
+
+                        {% for item in filter.qs %}
+                            <div class="col-lg-9 col-md-12 mx-md-auto mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">
+                                            <a class="nav-link" href="{% url 'view_scholarship' item.id %}"
+                                               title="{{ item.name|title }}">
+                                                {{ item.name|title|truncatechars:38 }}
+                                            </a>
+                                        </h4>
+                                        <div class="details d-flex">
+                                            <h6 class="card-subtitle mb-2 text-danger badge ">
+                                                Rs. {{ item.amt_indian|floatformat:2 }}
+                                            </h6>
+                                            <h6 class="card-subtitle mb-2 text-muted badge ">
+                                                {{ item.organization|title }}
+                                            </h6>
+                                        </div>
+                                        <p class="card-text lead">{{ item.description|truncatechars:200 }}</p>
+                                        <p class="card-text">
+                                            <a class="btn btn-primary" href="{% url 'view_scholarship' item.id %}">
+                                                View Details
+                                            </a>
+                                            {% if user.is_authenticated %}
+                                                <a class="btn btn-success" href="{{ item.link }}">
+                                                    Apply Now
+                                                </a>
+                                            {% else %}
+                                                <a class="btn btn-success" href="{% url 'login' %}">
+                                                    Apply Now
+                                                </a>
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="col-md-12">
+                                <div class="alert alert-warning">
+                                    <h4 class="alert-heading">No Scholarships Found</h4>
+                                    <p>There are no scholarships available at the moment. Please check back later.</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block css %}
+    <style>
+        aside {
+            display: flex;
+            flex-wrap: nowrap;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+            background: #eff0f5;
+        }
+
+        .content {
+            background-image: url("{% static 'images/scholarship-header.jpg' %}");
+            height: 25rem;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-wrap: nowrap;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+    </style>
+{% endblock %}

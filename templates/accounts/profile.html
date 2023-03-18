@@ -1,0 +1,47 @@
+{% extends 'layout/base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+{% block content %}
+
+    <div class="container pt-5">
+        <div class="row justify-content-center align-items-center 100h pt-5">
+            <div class="col-md-6">
+                {# show profile details #}
+                <h1 class="text-center">Profile</h1>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img src="{{ user.profile.image.url }}" class="img-fluid" alt="profile">
+                            </div>
+                            <div class="col-md-8">
+                                <h3>{{ user.username }}</h3>
+                                <p>✉️ {{ user.email }}</p>
+                                <p>🏠 {{ user.profile.address }}</p>
+                                <p>🏙️ {{ user.profile.city }}</p>
+                                <p>🌍 {{ user.profile.country }}</p>
+                                <p>📞 {{ user.profile.phone }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'profile_update' %}" class="btn btn-primary">Update Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block css %}
+    <style>
+        body {
+            background-color: rgb(44, 41, 39);
+            background-image: radial-gradient(circle, rgb(178, 240, 246) 0%, rgb(255, 255, 255) 100%);
+            height: 100vh;
+        }
+    </style>
+{% endblock %}
+{% block js %}
+    <script>
+    </script>
+{% endblock %}

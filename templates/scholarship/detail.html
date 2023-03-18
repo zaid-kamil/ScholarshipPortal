@@ -1,0 +1,138 @@
+{% extends 'layout/base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+{% block content %}
+    <section class="container-fluid hero">
+        <div class="row">
+            <div class="col-md-12 p-0">
+                <div class="content text-center">
+                    <h1 class="text-white">{{ item.name|title }}</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container">
+        <div class="row">
+            <div class="col-lg-10 col-md-10 mx-auto">
+                <div class="container-fluid p-3 ">
+                    <div class="row p-5">
+
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="text-center">
+                                    <div>From {{ item.organization }}</div>
+                                </h5>
+                                <div class="lead">
+                                    <div class="text-primary bold">last date of submission:</div>
+                                    <div>{{ item.last_date }}</div>
+                                </div>
+                                <div class="lead">
+                                    <div class="text-primary bold">Amount:</div>
+                                    <div>{{ item.amount }} in <span class="text-primary">{{ item.country }}</span></div>
+                                </div>
+                                <div class="lead">
+                                    <div class="text-primary bold">Acceptance start date:</div>
+                                    <div>{{ item.acceptance_start_date }}</div>
+                                </div>
+                                <div class="lead">
+                                    <div class="text-primary bold">Winner Announcement date:</div>
+                                    <div>{{ item.winner_announcement_date }}</div>
+                                </div>
+                                <div class="lead">
+                                    <div class="text-primary bold">Scholarships Available:</div>
+                                    <div>{{ item.quantity }}</div>
+                                </div>
+                            </div>
+                            <div class="p-3">
+                                <a href="{{ item.link }}" class="btn btn-lg btn-primary w-100">Apply Now</a>
+                            </div>
+                        </div>
+
+                        <div class="accordion" id="accordionPanelsStayOpenExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                                            aria-controls="panelsStayOpen-collapseOne">
+                                        Eligibility
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                                     aria-labelledby="panelsStayOpen-headingOne">
+                                    <div class="accordion-body">
+                                        {{ item.eligibility|linebreaksbr|safe|capfirst }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                                            aria-controls="panelsStayOpen-collapseThree">
+                                        Description
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
+                                     aria-labelledby="panelsStayOpen-headingThree">
+                                    <div class="accordion-body">
+                                        {{ item.description|linebreaksbr|safe|capfirst }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block css %}
+    <style>
+
+
+        .content {
+            height: 25rem;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-wrap: nowrap;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .bold {
+            font-weight: bolder;
+            margin-bottom: .5rem;
+        }
+
+        .lead {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+           h1 {
+                text-shadow: 5px 5px 10px black;
+            }
+    </style>
+
+    {% if item.image %}
+        <style>
+            .content {
+                background-image: url("{{ item.image.url }}");
+            }
+        </style>
+    {% else %}
+        <style>
+            .content {
+                background: chocolate;
+            }
+
+
+        </style>
+    {% endif %}
+
+{% endblock %}
